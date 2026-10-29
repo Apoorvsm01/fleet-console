@@ -51,3 +51,5 @@
 | 2026-10-29 | resume | extract | haiku | 71873 | 6 | 30 |
 | 2026-10-29 | resume | typeset + site link | sonnet | 99116 | 21 | 135 |
 | 2026-10-29 | resume | Pure variant + NYC location | sonnet | 72775 | 5 | 41 |
+| 2026-10-29 | resume | master fact gathering | sonnet | 311520 | 48 | 553 |
+| 2026-10-29 | resume | master typeset + BA fix | sonnet | 84395 | 10 | 190 |
