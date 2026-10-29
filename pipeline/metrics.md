@@ -40,3 +40,5 @@
 | 2026-10-29 | 6 | storyteller (pipeline story r2) | sonnet | 63660 | 11 | 163 |
 | 2026-10-29 | publish | builder (pages prep) | sonnet | 40840 | 11 | 64 |
 | 2026-10-29 | publish | portfolio conversion | sonnet | 121296 | 25 | 208 |
+| 2026-10-29 | publish | portfolio cross-links | sonnet | 87189 | 14 | 109 |
+| 2026-10-29 | publish | pipeline diagram | sonnet | 102435 | 13 | 221 |
