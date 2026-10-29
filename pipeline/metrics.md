@@ -46,3 +46,5 @@
 | 2026-10-29 | redesign | loop video block | sonnet | 75534 | 5 | 46 |
 | 2026-10-29 | redesign | IA diagram | sonnet | 89285 | 8 | 89 |
 | 2026-10-29 | redesign | surface switcher + embed fit | sonnet | 67850 | 38 | 297 |
+| 2026-10-29 | redesign | case-study restructure | sonnet | 126898 | 35 | 284 |
+| 2026-10-29 | redesign | motion reel | sonnet | 124321 | 41 | 471 |
