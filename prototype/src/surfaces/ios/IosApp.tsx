@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, Navigate, Route, Routes, useLocation, useSearchParams } from 'react-router-dom'
 import { useSimNow } from '../../lib/clock'
+import { isEmbed, useFitZoom, useViewportWidth } from '../../lib/embed'
+import { SurfaceChrome } from '../../components/SurfaceSwitcher'
 import { fmtTime } from '../../lib/time'
 import './ios.css'
 import Escalations from './Escalations'
@@ -43,10 +45,13 @@ export default function IosApp() {
   const q = sp.get('theme')
   const theme = q === 'dark' || q === 'light' ? q : prefersDark ? 'dark' : 'light'
   const bare = sp.get('frame') === '0'
+  const vw = useViewportWidth()
+  const notes = !bare && !(isEmbed() && vw < 900) // in an embed, notes only if there is room
+  const fit = useFitZoom<HTMLDivElement>(!bare, [notes, loc.pathname])
   const isLock = loc.pathname.replace(/\/$/, '').endsWith('/ios/lock')
-  return (
+  const body = (
     <div data-surface="ios" data-theme={theme} data-bare={bare} className="ios-canvas">
-      <div className="flex items-center gap-8">
+      <div ref={fit} className="flex items-center gap-8">
       <div className="ios-bezel">
         <div className="ios-phone" role="application" aria-label="Plumb for iPhone">
           {!bare && <span className="ios-island" aria-hidden />}
@@ -67,10 +72,11 @@ export default function IosApp() {
           {!bare && !isLock && <span className="ios-indicator" aria-hidden />}
         </div>
       </div>
-      {!bare && <PresenterNotes search={loc.search} />}
+      {notes && <PresenterNotes search={loc.search} />}
       </div>
     </div>
   )
+  return bare ? body : <SurfaceChrome>{body}</SurfaceChrome>
 }
 
 /** Presenter notes: portfolio navigation that lives on the canvas, outside the phone frame. */

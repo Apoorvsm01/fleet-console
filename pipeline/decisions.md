@@ -283,3 +283,8 @@ D-NEW-P4 (Inbox): Sev column widened 24 to 32 so SEV?-chips do not clip.
 - Car tag keys drop the "?" and dashed chip (tags are proposed; stated here, not in the car). Autonomy square removed (text only). Toast is "Logged · type" plus Undo. Secondary targets are 96px (--spacing-btn).
 - Shoot script measures min computed font and min target per state and fails below 32/76.
 - OPEN: spec should state that step 1 and 3 have two answer keys; pre-connect countdown semantics are simulated.
+
+## D-NEW: SurfaceSwitcher and embed fit
+- Decided: a 48px bar above every surface (desktop shell, iOS canvas, vehicle canvas) holds a Desktop/iPhone/In-vehicle segmented control (aria-current) plus an Overview link. Each surface opens on its hero route (/now, /ios, /vehicle). `?embed=1` is remembered in sessionStorage so in-app navigation stays embedded. Desktop scales with a CSS transform (0.6 floor); phone and vehicle frames scale to fit the height under the bar. iOS presenter notes hide in an embed under 900px wide.
+- Rejected: floating pill (would cover the desktop top bar); scaling the switcher (unreadable).
+- OPEN: the bar is hidden in `?frame=0` bare capture mode. Below 768px wide the desktop still scales to only 0.6 and clips.

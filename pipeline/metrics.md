@@ -42,3 +42,7 @@
 | 2026-10-29 | publish | portfolio conversion | sonnet | 121296 | 25 | 208 |
 | 2026-10-29 | publish | portfolio cross-links | sonnet | 87189 | 14 | 109 |
 | 2026-10-29 | publish | pipeline diagram | sonnet | 102435 | 13 | 221 |
+| 2026-10-29 | redesign | taste-skill vetting | haiku | 74178 | 8 | 53 |
+| 2026-10-29 | redesign | loop video block | sonnet | 75534 | 5 | 46 |
+| 2026-10-29 | redesign | IA diagram | sonnet | 89285 | 8 | 89 |
+| 2026-10-29 | redesign | surface switcher + embed fit | sonnet | 67850 | 38 | 297 |

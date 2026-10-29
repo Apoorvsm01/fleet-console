@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { AppProvider, useApp } from '../lib/app'
 import { cx } from '../lib/cx'
@@ -11,6 +11,8 @@ import { getActiveEscalations, getCurrentShiftId, getCurrentUser, getGaps, getNa
 import { useStore } from '../lib/store'
 import { fmtCountdown, fmtTime, ms } from '../lib/time'
 import type { QueueId, ShiftId } from '../data/types'
+import { isEmbed, useViewportWidth } from '../lib/embed'
+import { SurfaceChrome } from './SurfaceSwitcher'
 import { CommandPalette } from './CommandPalette'
 import { KeyboardSheet } from './KeyboardSheet'
 import { Icon } from './Icon'
@@ -170,10 +172,34 @@ function GlobalKeys() {
   return null
 }
 
+const SHELL_MIN = 1280 // matches --spacing-page-min
+const MIN_SCALE = 0.6
+
+/** Scales the desktop app down to the viewport width (embed mode, or a window narrower than the shell minimum). Never below MIN_SCALE; never up. */
+function DesktopFit({ children }: { children: ReactNode }) {
+  const vw = useViewportWidth()
+  const [embed] = useState(isEmbed)
+  const scale = embed || vw < SHELL_MIN ? Math.max(MIN_SCALE, Math.min(1, vw / SHELL_MIN)) : 1
+  const scaled = scale < 1
+  const ref = useRef<HTMLDivElement>(null)
+  useLayoutEffect(() => {
+    // The body carries the shell minimum width; drop it while scaled so the wrapper owns the layout.
+    document.body.style.minWidth = scaled ? '0' : ''
+    return () => { document.body.style.minWidth = '' }
+  }, [scaled])
+  if (!scaled) return <div className="h-full">{children}</div>
+  return (
+    <div className="h-full overflow-hidden">
+      <div ref={ref} style={{ width: `${100 / scale}%`, height: `${100 / scale}%`, transform: `scale(${scale})`, transformOrigin: 'top left' }}>{children}</div>
+    </div>
+  )
+}
+
 function Shell() {
   const loc = useLocation()
   applyDemoFromLocation(loc.pathname, loc.search) // before children render, so ?demo=acked has no flash
   return (
+    <SurfaceChrome><DesktopFit>
     <div className="flex h-full min-w-page-min bg-canvas text-fg">
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-60 focus:bg-surface focus:p-2">Skip to content</a>
       <Nav />
@@ -187,6 +213,7 @@ function Shell() {
       <Toasts />
       <GlobalKeys />
     </div>
+    </DesktopFit></SurfaceChrome>
   )
 }
 

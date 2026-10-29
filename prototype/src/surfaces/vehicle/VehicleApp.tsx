@@ -11,6 +11,8 @@ import { PROTOCOL_STEPS } from '../../lib/protocol'
 import { getEscalation } from '../../lib/queries'
 import { captureTag, getProtocol, proposedSevFor, removeTag, setProtocolStep, useStore } from '../../lib/store'
 import { COPY } from '../../lib/copy'
+import { useFitZoom } from '../../lib/embed'
+import { SurfaceChrome } from '../../components/SurfaceSwitcher'
 
 /* ---------- fixtures for the vehicle ---------- */
 const DRIVE = DRIVES.find((d) => d.state === 'Active')!
@@ -47,25 +49,10 @@ function VSev({ sev }: { sev: Sev }) {
 }
 
 /* ---------- Frame: bezel on a dark canvas, or bare ---------- */
-function useFit(enabled: boolean): number {
-  const [z, setZ] = useState(1)
-  useEffect(() => {
-    if (!enabled) return
-    const fit = () => {
-      const probe = document.querySelector<HTMLElement>('.v-bezel')
-      if (!probe) return
-      const w = probe.offsetWidth, h = probe.offsetHeight
-      setZ(Math.min(1, window.innerWidth / w, window.innerHeight / h))
-    }
-    fit(); window.addEventListener('resize', fit)
-    return () => window.removeEventListener('resize', fit)
-  }, [enabled])
-  return z
-}
 function Frame({ bare, children }: { bare: boolean; children: ReactNode }) {
-  const z = useFit(!bare)
+  const ref = useFitZoom<HTMLDivElement>(!bare, [], true)
   if (bare) return <div className="v-canvas" data-bare>{children}</div>
-  return <div className="v-canvas"><div className="v-bezel" style={{ zoom: z }}>{children}</div></div>
+  return <div className="v-canvas"><div ref={ref} className="v-bezel">{children}</div></div>
 }
 
 /* ---------- Drive view ---------- */
@@ -302,8 +289,8 @@ export default function VehicleApp() {
   const [sp] = useSearchParams()
   const day = sp.get('mode') === 'day'
   const bare = sp.get('frame') === '0'
-  return (
-    <div data-surface="vehicle" data-ambient={day ? 'day' : 'night'}>
+  const app = (
+    <div data-surface="vehicle" data-ambient={day ? 'day' : 'night'} className={bare ? undefined : 'h-full'}>
       <Frame bare={bare}>
         <main className="v-screen">
           <Routes>
@@ -316,4 +303,6 @@ export default function VehicleApp() {
       </Frame>
     </div>
   )
+  // The switcher bar sits outside the vehicle token scope so it stays at normal size.
+  return bare ? app : <SurfaceChrome>{app}</SurfaceChrome>
 }

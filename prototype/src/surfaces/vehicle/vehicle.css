@@ -201,9 +201,9 @@
 
 
 /* ================= Vehicle components ================= */
-.v-canvas { min-height: 100vh; display: grid; place-items: center; background: var(--color-surface-sunken); }
+.v-canvas { height: 100%; overflow: hidden; display: grid; place-items: center; background: var(--color-surface-sunken); }
 .v-bezel { padding: var(--bezel); border-radius: var(--radius-xl); background: var(--color-surface-sunken); border: var(--border-key) solid var(--color-line); }
-.v-canvas[data-bare] { background: var(--color-canvas); display: block; min-height: 0; }
+.v-canvas[data-bare] { background: var(--color-canvas); display: block; height: auto; overflow: visible; }
 .v-screen { position: relative; width: var(--screen-w); height: var(--screen-h); overflow: hidden; background: var(--color-canvas); color: var(--color-fg); display: flex; flex-direction: column; padding: var(--spacing-pane); gap: var(--spacing-gap); }
 .v-bezel .v-screen { border-radius: var(--radius-lg); }
 .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }

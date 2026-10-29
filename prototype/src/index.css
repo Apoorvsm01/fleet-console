@@ -33,5 +33,7 @@
   *, *::before, *::after { scroll-behavior: auto !important; }
 }
 
+/* Height of the SurfaceSwitcher bar above every surface. */
+:root { --switcher-h: calc(var(--spacing-ctl) + var(--spacing-pane)); }
 html, body, #root { height: 100%; }
-body { margin: 0; min-width: var(--spacing-page-min); }
+body { margin: 0; }
