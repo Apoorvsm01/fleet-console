@@ -1,0 +1,272 @@
+/* Vehicle surface CSS. Vehicle parts of pipeline/theme-surfaces.css (copied), plus vehicle component classes. Plain CSS; every value is a token var. */
+/* =====================================================================
+   Vehicle  1680 x 720 landscape.  Night is the default ground.
+   Glance standard: <= 2 s, targets >= 76 px, no lists, no scroll,
+   severity by shape + position + label + hue.
+   data-theme and data-density are ignored; use data-ambient.
+   ===================================================================== */
+[data-surface="vehicle"] {
+  /* Structure (identical night and day). */
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+
+  /* Plumb scale remapped. Nothing on this surface is smaller than 32 px. */
+  --text-xs: 32px;               /* chip labels, vehicle id, secondary line */
+  --text-xs--line-height: 36px;
+  --text-sm: 32px;
+  --text-sm--line-height: 36px;
+  --text-base: 40px;             /* key labels */
+  --text-base--line-height: 44px;
+  --text-md: 40px;
+  --text-md--line-height: 44px;
+  --text-lg: 56px;               /* alert headline */
+  --text-lg--line-height: 60px;
+  --text-xl: 72px;               /* guided step instruction */
+  --text-xl--line-height: 76px;
+  --text-glance-sm: 32px;
+  --text-glance-md: 40px;
+  --text-glance-lg: 56px;
+  --text-glance-lg--line-height: 60px;
+  --text-glance-xl: 72px;
+  --text-glance-hero: 120px;
+  --duration-toast: 3000ms;      /* ConfirmToast dwell */
+  --screen-w: 1680px;
+  --screen-h: 720px;
+  --border-key: 3px;
+  --border-frame: 12px;
+  --bezel: 28px;
+  --width-undo: 200px;
+  --width-done: 480px;
+  --height-bar: 16px;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --text-2xl: 120px;             /* countdown and distance, mono */
+  --text-2xl--line-height: 120px;
+  --tracking-caps: 0.02em;
+
+  --spacing-row: 120px;
+  --spacing-ctl: 76px;
+  --spacing-pad: 24px;
+  --spacing-gap: 24px;           /* >= 24 between targets: 76 + 24 = 100 px pitch minimum */
+  --spacing-pane: 48px;
+  --spacing-chip: 56px;          /* severity chip height */
+  --spacing-icon: 48px;          /* severity glyph */
+  --spacing-target: 76px;
+  --spacing-btn: 96px;           /* secondary targets (End call, Got it, Undo): 96 where space allows, 76 is the floor */
+  --spacing-margin: 48px;        /* safe frame inside 1680 x 720 */
+  --spacing-key-w: 288px;        /* 5 keys: 5*288 + 4*24 = 1536 <= 1584 */
+  --spacing-key-h: 320px;
+  --spacing-call: 160px;
+  --spacing-band: 168px;
+  --spacing-toast: 120px;
+
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;             /* TagKey */
+  --radius-xl: 28px;
+
+  /* Motion: restrained. No slide, scale, bounce, pulse, or blink. Fade only, once. */
+  --duration-instant: 0ms;
+  --duration-fast: 0ms;
+  --duration-base: 0ms;
+  --duration-slow: 120ms;        /* toast fade-in only */
+  --duration-pulse: 0ms;         /* SEV1 is static and large; it does not pulse */
+  --ease-standard: linear;
+  --ease-enter: linear;
+  --ease-exit: linear;
+
+  --shadow-1: none;
+  --shadow-2: none;              /* borders, not shadows: shadows vanish in glare and at night */
+  --shadow-3: none;
+
+  background: var(--color-canvas);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+/* ---- Vehicle NIGHT (default). Ratios vs canvas #0a0b0e unless noted. All text >= 7:1 (AAA). ---- */
+[data-surface="vehicle"],
+[data-surface="vehicle"][data-ambient="night"] {
+  color-scheme: dark;
+
+  --color-canvas: #0a0b0e;
+  --color-surface: #171a21;            /* TagKey ground */
+  --color-surface-sunken: #000000;
+  --color-surface-raised: #1d212a;
+  --color-surface-hover: #1d212a;
+  --color-surface-selected: #14275f;   /* pressed key */
+  --color-scrim: rgb(0 0 0 / 0.8);
+
+  --color-fg: #ffffff;                 /* 19.5:1 */
+  --color-fg-muted: #e1e4e9;           /* 15:1 */
+  --color-fg-subtle: #cbd0d8;          /* 12:1; no dim text on this surface */
+  --color-fg-on-accent: #0a0b0e;
+  --color-fg-link: #c6d4f9;
+
+  --color-line: #626a78;               /* key borders must be visible: >= 3:1 */
+  --color-line-strong: #9aa2af;
+  --color-focus: #c6d4f9;
+
+  --color-accent: #c6d4f9;             /* 12:1; primary key fill, text #0a0b0e on it */
+  --color-accent-hover: #8faaf5;
+  --color-accent-subtle: #14275f;
+  --color-accent-subtle-fg: #e4ebfc;
+
+  /* Severity: same hues and shapes as theme.css dark; marks verified >= 7:1 on #0a0b0e. */
+  --color-sev1-mark: #f28075;          /* 7.6:1 */
+  --color-sev1-fg: #ffb4ab;            /* 10:1 */
+  --color-sev1-bg: #3a1512;
+  --color-sev1-line: #f28075;
+  --color-on-sev1: #0a0b0e;            /* 7.6:1 on sev1-mark */
+  --color-sev2-mark: #f2b134;          /* 10.4:1 */
+  --color-sev2-fg: #f5c25b;            /* 11:1 */
+  --color-sev2-bg: #3a2a08;
+  --color-sev2-line: #f2b134;          /* raised from theme.css dark (#b26a00) to pass 3:1 as a key border */
+  --color-sev3-mark: #4fc3cc;          /* 9.4:1 */
+  --color-sev3-fg: #7dd3da;
+  --color-sev3-bg: #0f2e31;
+  --color-sev3-line: #4fc3cc;
+
+  --color-flag-fg: #b79cf2;            /* 8:1 */
+  --color-flag-bg: #2a1f4a;
+  --color-flag-line: #b79cf2;
+
+  --color-status-off: #7f8b9f;
+  --color-status-on: #e1e4e9;
+  --color-status-done: #c6d4f9;
+
+  /* Vehicle-only: hazard marker (neutral, not a severity) and dim for the night "calm" state. */
+  --color-hazard: #ffffff;
+}
+
+/* ---- Vehicle DAY (direct sunlight). High-contrast light; same structure. ---- */
+[data-surface="vehicle"][data-ambient="day"] {
+  color-scheme: light;
+
+  --color-canvas: #ffffff;
+  --color-surface: #eef0f3;
+  --color-surface-sunken: #e1e4e9;
+  --color-surface-raised: #ffffff;
+  --color-surface-hover: #e1e4e9;
+  --color-surface-selected: #c6d4f9;
+  --color-scrim: rgb(14 16 21 / 0.6);
+
+  --color-fg: #0a0b0e;
+  --color-fg-muted: #262b35;
+  --color-fg-subtle: #3a414e;
+  --color-fg-on-accent: #ffffff;
+  --color-fg-link: #14275f;
+
+  --color-line: #4f5766;
+  --color-line-strong: #262b35;
+  --color-focus: #14275f;
+
+  --color-accent: #2447ae;
+  --color-accent-hover: #14275f;
+  --color-accent-subtle: #e4ebfc;
+  --color-accent-subtle-fg: #14275f;
+
+  --color-sev1-mark: #b42318;
+  --color-sev1-fg: #8f1b12;
+  --color-sev1-bg: #fdecea;
+  --color-sev1-line: #b42318;
+  --color-on-sev1: #ffffff;
+  --color-sev2-mark: #8a5300;          /* darker than theme.css light (#b26a00) for 7:1 */
+  --color-sev2-fg: #6b4000;
+  --color-sev2-bg: #fdf1d6;
+  --color-sev2-line: #8a5300;
+  --color-sev3-mark: #0f6b73;
+  --color-sev3-fg: #0f6b73;
+  --color-sev3-bg: #e2f3f4;
+  --color-sev3-line: #0f6b73;
+
+  --color-flag-fg: #6d3fc4;
+  --color-flag-bg: #efe9fb;
+  --color-flag-line: #6d3fc4;
+
+  --color-status-off: #7f8b9f;
+  --color-status-on: #3a414e;
+  --color-status-done: #2447ae;
+
+  --color-hazard: #0a0b0e;
+}
+
+/* Vehicle base: focus ring is for wheel-controller / rotary focus, thick on purpose. */
+[data-surface="vehicle"] :focus-visible { outline: 4px solid var(--color-focus); outline-offset: 4px; }
+
+
+/* ================= Vehicle components ================= */
+.v-canvas { min-height: 100vh; display: grid; place-items: center; background: var(--color-surface-sunken); }
+.v-bezel { padding: var(--bezel); border-radius: var(--radius-xl); background: var(--color-surface-sunken); border: var(--border-key) solid var(--color-line); }
+.v-canvas[data-bare] { background: var(--color-canvas); display: block; min-height: 0; }
+.v-screen { position: relative; width: var(--screen-w); height: var(--screen-h); overflow: hidden; background: var(--color-canvas); color: var(--color-fg); display: flex; flex-direction: column; padding: var(--spacing-pane); gap: var(--spacing-gap); }
+.v-bezel .v-screen { border-radius: var(--radius-lg); }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+.v-strip { height: var(--spacing-ctl); flex: none; display: flex; align-items: center; gap: var(--spacing-gap); font-size: var(--text-sm); line-height: var(--text-sm--line-height); color: var(--color-fg-muted); white-space: nowrap; }
+.v-strip .v-speed { font-size: var(--text-glance-lg); line-height: var(--text-glance-lg--line-height); color: var(--color-fg); }
+.v-strip .v-unit { margin-inline-start: var(--spacing-pad); }
+.v-strip .v-sep { width: var(--border-key); height: var(--spacing-icon); background: var(--color-line); }
+.v-strip .v-grow { flex: 1; }
+.v-mode { display: inline-flex; align-items: center; gap: var(--spacing-pad); color: var(--color-fg); }
+
+.v-zone { height: var(--spacing-band); flex: none; display: flex; align-items: center; justify-content: center; }
+.v-hint { font-size: var(--text-sm); line-height: var(--text-sm--line-height); color: var(--color-fg-subtle); }
+
+.v-pad { flex: none; display: flex; gap: var(--spacing-gap); justify-content: center; }
+.v-key { width: var(--spacing-key-w); height: var(--spacing-key-h); flex: none; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; padding: var(--spacing-pad); border-radius: var(--radius-lg); border: var(--border-key) solid var(--color-line); background: var(--color-surface); color: var(--color-fg); font: inherit; font-size: var(--text-base); line-height: var(--text-base--line-height); text-align: start; cursor: pointer; }
+.v-pad[data-n="3"] .v-key { width: 480px; }
+.v-key[data-sev="1"] { background: var(--color-sev1-mark); color: var(--color-on-sev1); border-color: var(--color-on-sev1); }
+.v-key[data-sev="2"] { background: var(--color-sev2-bg); border-color: var(--color-sev2-line); }
+.v-key[data-sev="3"] { background: var(--color-surface); border-color: var(--color-sev3-line); }
+.v-key:active { background: var(--color-surface-selected); color: var(--color-fg); border-color: var(--color-line-strong); }
+.v-key .v-label { font-size: var(--text-base); line-height: var(--text-base--line-height); overflow-wrap: anywhere; }
+
+.v-chip { display: inline-flex; align-items: center; gap: var(--spacing-gap); height: var(--spacing-chip); padding-inline: var(--spacing-pad); border-radius: var(--radius-sm); border: var(--border-key) solid var(--color-sev2-line); font-size: var(--text-xs); line-height: var(--text-xs--line-height); white-space: nowrap; color: var(--color-sev2-fg); }
+.v-chip svg { width: var(--spacing-icon); height: var(--spacing-icon); flex: none; }
+.v-chip[data-sev="1"] { background: var(--color-sev1-mark); color: var(--color-on-sev1); border-color: var(--color-on-sev1); }
+.v-chip[data-sev="2"] { background: var(--color-sev2-bg); color: var(--color-sev2-fg); border-color: var(--color-sev2-line); }
+.v-chip[data-sev="3"] { background: transparent; color: var(--color-sev3-fg); border-color: var(--color-sev3-line); }
+.v-key[data-sev="1"] .v-chip { border-color: var(--color-on-sev1); }
+
+.v-btn { height: var(--spacing-btn); min-width: var(--spacing-ctl); padding-inline: var(--spacing-pad); display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-md); border: var(--border-key) solid var(--color-line-strong); background: var(--color-surface); color: var(--color-fg); font: inherit; font-size: var(--text-base); line-height: var(--text-base--line-height); cursor: pointer; white-space: nowrap; }
+.v-btn:active { background: var(--color-surface-selected); }
+.v-btn[data-primary] { background: var(--color-accent); color: var(--color-fg-on-accent); border-color: var(--color-accent); }
+.v-btn[data-primary]:active { background: var(--color-accent-hover); }
+
+.v-toast { height: var(--spacing-toast); max-width: 100%; display: flex; align-items: center; gap: var(--spacing-gap); padding: 0 var(--spacing-pad); border-radius: var(--radius-lg); border: var(--border-key) solid var(--color-line-strong); background: var(--color-surface-raised); font-size: var(--text-md); line-height: var(--text-md--line-height); animation: v-fade var(--duration-slow) linear both; }
+.v-toast .v-logged { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.v-toast .v-undo { width: var(--width-undo); margin-inline-start: var(--spacing-pad); }
+@keyframes v-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.v-band { width: 100%; height: var(--spacing-band); display: flex; align-items: center; gap: var(--spacing-gap); padding-inline: var(--spacing-pad); border-radius: var(--radius-lg); border: var(--border-key) solid var(--color-line-strong); background: var(--color-surface-raised); }
+.v-hazard { width: var(--spacing-icon); height: var(--spacing-icon); flex: none; background: var(--color-hazard); border-radius: var(--radius-xs); }
+.v-band h1 { margin: 0; font-size: var(--text-lg); line-height: var(--text-lg--line-height); font-weight: 700; white-space: nowrap; }
+.v-dist { flex: 1; min-width: 0; display: flex; align-items: center; gap: var(--spacing-gap); }
+.v-bar { flex: 1; height: var(--height-bar); border-radius: var(--radius-xs); background: var(--color-surface-sunken); border: var(--border-key) solid var(--color-line); position: relative; box-sizing: content-box; }
+.v-bar > span { position: absolute; inset: 0 auto 0 0; background: var(--color-fg); border-radius: var(--radius-xs); }
+.v-num { font-size: var(--text-xl); line-height: var(--text-xl--line-height); text-align: end; min-width: calc(var(--spacing-key-w) / 2); }
+.v-num small { font-size: var(--text-glance-md); margin-inline-start: var(--spacing-gap); }
+
+/* EmergencyCall */
+.v-emerg { position: absolute; inset: 0; display: grid; grid-template-columns: 5fr 3fr; gap: var(--spacing-pane); padding: var(--spacing-pane); background: var(--color-sev1-bg); border: var(--border-frame) solid var(--color-sev1-mark); color: var(--color-fg); }
+.v-emerg .v-left { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
+.v-emerg .v-right { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; border-inline-start: var(--border-key) solid var(--color-sev1-line); padding-inline-start: var(--spacing-pane); }
+.v-sev1 { display: flex; align-items: center; gap: var(--spacing-gap); font-size: var(--text-glance-lg); line-height: var(--text-glance-lg--line-height); font-weight: 700; }
+.v-sev1 svg { width: var(--spacing-call); height: var(--spacing-call); color: var(--color-sev1-mark); }
+.v-step-n { font-size: var(--text-glance-sm); line-height: var(--text-sm--line-height); color: var(--color-fg-muted); }
+.v-step { margin: 0; font-size: var(--text-xl); line-height: var(--text-xl--line-height); font-weight: 700; }
+.v-done { height: var(--spacing-call); flex: 1; min-width: 0; max-width: var(--width-done); font-size: var(--text-glance-lg); line-height: var(--text-glance-lg--line-height); border-radius: var(--radius-lg); }
+.v-answers { display: flex; gap: var(--spacing-pane); }  /* two answer keys: >= 48 apart */
+.v-end { height: var(--spacing-btn); width: 100%; }
+.v-count { font-size: var(--text-glance-hero); line-height: var(--text-glance-hero); }
+.v-who { font-size: var(--text-glance-lg); line-height: var(--text-glance-lg--line-height); font-weight: 700; overflow-wrap: anywhere; }
+.v-timer { font-size: var(--text-xl); line-height: var(--text-xl--line-height); }
+.v-lbl { font-size: var(--text-sm); line-height: var(--text-sm--line-height); color: var(--color-fg-muted); }
+
+@media (prefers-reduced-motion: reduce) { .v-toast { animation: none; } }

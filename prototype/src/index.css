@@ -1,0 +1,37 @@
+@import "tailwindcss";
+@import "./theme.css";
+@import "@fontsource/geist-sans/latin-400.css";
+@import "@fontsource/geist-sans/latin-500.css";
+@import "@fontsource/geist-sans/latin-600.css";
+@import "@fontsource/geist-mono/latin-400.css";
+@import "@fontsource/geist-mono/latin-500.css";
+
+/* Plumb motion helpers. All durations come from theme tokens and collapse to 0 under prefers-reduced-motion. */
+@keyframes plumb-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes plumb-slide { from { opacity: 0; transform: translateY(var(--spacing)); } to { opacity: 1; transform: none; } }
+@keyframes plumb-highlight { from { background-color: var(--color-accent-subtle); } to { background-color: transparent; } }
+@keyframes plumb-ring { from { opacity: 0.9; } to { opacity: 0; } }
+
+@utility anim-fade { animation: plumb-fade var(--duration-fast) var(--ease-enter) both; }
+@utility anim-slide { animation: plumb-slide var(--duration-base) var(--ease-enter) both; }
+@utility anim-highlight { animation: plumb-highlight var(--duration-slow) var(--ease-standard) 1; }
+/* The only pulse in the system: SEV1 ring on an unacknowledged escalation. Stops under reduced motion. */
+@utility sev-ring {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid var(--color-sev1-mark);
+    animation: plumb-ring var(--duration-pulse) var(--ease-standard) infinite;
+    pointer-events: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sev-ring::after, [class*="sev-ring"]::after { animation: none; display: none; }
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}
+
+html, body, #root { height: 100%; }
+body { margin: 0; min-width: var(--spacing-page-min); }

@@ -1,0 +1,144 @@
+/* iOS parts of pipeline/theme-surfaces.css. The @theme tokens are plain custom properties here
+   (utilities for them are written as h-(--spacing-target) etc.), because this file is not a Tailwind entry. */
+[data-surface="ios"] {
+  --spacing-target: 44px;
+  --spacing-safe-top: 59px;
+  --spacing-safe-bottom: 34px;
+  --spacing-navbar: 44px;
+  --spacing-tabbar: 49px;
+  --spacing-margin: 16px;
+  --spacing-cta: 50px;
+  --text-glance-xl: 72px;
+  --text-glance-xl--line-height: 76px;
+  --text-largetitle: 34px;
+  --text-largetitle--line-height: 41px;
+  --text-subhead: 15px;
+  --text-subhead--line-height: 20px;
+  --text-timer: 56px;
+  --text-timer--line-height: 60px;
+  --duration-sheet: 350ms;
+  --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+  /* Phone frame (presentation only, not part of the product) */
+  --ios-w: 393px;
+  --ios-h: 852px;
+  --ios-bezel: 10px;
+  --ios-corner: 55px;
+  --ios-island-w: 120px;
+  --ios-island-h: 34px;
+  --ios-indicator-w: 134px;
+  --ios-indicator-h: 5px;
+  --ios-grabber-w: 36px;
+}
+[data-surface="ios"] {
+  --font-sans: -apple-system, "SF Pro Text", "SF Pro", system-ui, "Geist", sans-serif;
+  /* --font-mono unchanged: Geist Mono for IDs and timers. */
+
+  /* Plumb scale remapped to iOS text styles so carried components resize themselves. */
+  --text-xs: 12px;               /* caption1: chips, flags */
+  --text-xs--line-height: 16px;
+  --text-sm: 13px;               /* footnote */
+  --text-sm--line-height: 18px;
+  --text-base: 17px;             /* body */
+  --text-base--line-height: 22px;
+  --text-md: 17px;               /* headline: use font-semibold */
+  --text-md--line-height: 22px;
+  --text-lg: 22px;               /* title2 */
+  --text-lg--line-height: 28px;
+  --text-xl: 28px;               /* title1: metric values */
+  --text-xl--line-height: 34px;
+  --text-2xl: 34px;              /* large title */
+  --text-2xl--line-height: 41px;
+
+  --spacing-row: 64px;           /* two-line list row; single-line min is 44 */
+  --spacing-ctl: 44px;
+  --spacing-pad: 16px;
+  --spacing-gap: 12px;
+  --spacing-pane: 16px;
+  --spacing-chip: 24px;
+  --spacing-icon: 20px;
+  --spacing-target: 44px;
+  --spacing-navbar: 44px;
+  --spacing-tabbar: 49px;
+  --spacing-safe-top: 59px;      /* Dynamic Island devices */
+  --spacing-safe-bottom: 34px;   /* home indicator */
+  --spacing-margin: 16px;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;              /* severity chip, flag: still a rect, not a pill */
+  --radius-md: 10px;             /* buttons, fields */
+  --radius-lg: 14px;             /* inset-grouped cards and rows */
+  --radius-xl: 24px;             /* sheet top corners (native sheets use system radius) */
+
+  --duration-fast: 100ms;
+  --duration-base: 200ms;
+  --duration-slow: 350ms;
+  --duration-pulse: 1600ms;      /* SEV1 ring on an unacknowledged escalation only */
+
+  --shadow-2: 0 2px 8px rgb(14 16 21 / 0.12);
+  --shadow-3: 0 8px 28px rgb(14 16 21 / 0.22);
+
+  background: var(--color-canvas);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-variant-numeric: tabular-nums;
+  -webkit-text-size-adjust: 100%;
+}
+[data-surface="ios"][data-theme="light"] { --color-surface-glass: rgb(255 255 255 / 0.85); --color-tab-inactive: #626a78; }
+[data-surface="ios"][data-theme="dark"]  { --color-surface-glass: rgb(23 26 33 / 0.85);    --color-tab-inactive: #9aa2af; }
+
+[data-surface="ios"] :focus-visible { outline-offset: 1px; }  /* external keyboard / Switch Control only */
+
+
+[data-surface="ios"][data-theme="light"] { --color-surface-glass: rgb(255 255 255 / 0.85); --color-tab-inactive: #626a78; }
+[data-surface="ios"][data-theme="dark"]  { --color-surface-glass: rgb(23 26 33 / 0.85);    --color-tab-inactive: #9aa2af; }
+[data-surface="ios"] :focus-visible { outline: 2px solid var(--color-focus); outline-offset: 1px; }
+
+.hairline-b { border-bottom: 0.5px solid var(--color-line); }
+.hairline-t { border-top: 0.5px solid var(--color-line); }
+.t-largetitle { font-size: var(--text-largetitle); line-height: var(--text-largetitle--line-height); }
+.t-subhead { font-size: var(--text-subhead); line-height: var(--text-subhead--line-height); }
+.t-timer { font-size: var(--text-timer); line-height: var(--text-timer--line-height); }
+
+/* ---------- Canvas and phone frame ---------- */
+.ios-canvas { min-height: 100vh; display: grid; place-items: center; background: var(--color-surface-sunken); color: var(--color-fg); }
+.ios-bezel { padding: var(--ios-bezel); border-radius: calc(var(--ios-corner) + var(--ios-bezel)); background: var(--color-n-1000); box-shadow: var(--shadow-3); }
+.ios-phone { position: relative; overflow: hidden; width: var(--ios-w); height: var(--ios-h); border-radius: var(--ios-corner); background: var(--color-canvas); isolation: isolate; }
+.ios-canvas[data-bare="true"] { display: block; background: var(--color-canvas); }
+.ios-canvas[data-bare="true"] .ios-bezel { padding: 0; border-radius: 0; background: none; box-shadow: none; }
+.ios-canvas[data-bare="true"] .ios-phone { width: 100%; height: 100dvh; border-radius: 0; }
+.ios-island { position: absolute; top: calc(var(--ios-bezel) / 2 + 6px); left: 50%; width: var(--ios-island-w); height: var(--ios-island-h); transform: translateX(-50%); border-radius: var(--radius-full); background: var(--color-n-1000); z-index: 50; }
+.ios-indicator { position: absolute; bottom: 8px; left: 50%; width: var(--ios-indicator-w); height: var(--ios-indicator-h); transform: translateX(-50%); border-radius: var(--radius-full); background: var(--color-fg); z-index: 50; pointer-events: none; }
+.ios-indicator[data-on-dark="true"] { background: var(--color-n-0); }
+.ios-grabber { width: var(--ios-grabber-w); height: 5px; border-radius: var(--radius-full); background: var(--color-line-strong); }
+
+/* ---------- Motion: sheet slide-up, push, fade. Collapsed under reduced motion. ---------- */
+@keyframes ios-sheet-in { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes ios-sheet-out { from { transform: none; } to { transform: translateY(100%); } }
+@keyframes ios-scrim-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ios-scrim-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes ios-push-in { from { transform: translateX(30%); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes ios-cover-in { from { transform: translateY(8%); opacity: 0; } to { transform: none; opacity: 1; } }
+.ios-sheet { border-radius: var(--radius-xl) var(--radius-xl) 0 0; animation: ios-sheet-in var(--duration-sheet) var(--ease-spring) both; }
+.ios-sheet[data-closing="true"] { animation: ios-sheet-out var(--duration-base) var(--ease-standard) both; }
+.ios-scrim { animation: ios-scrim-in var(--duration-sheet) var(--ease-spring) both; }
+.ios-scrim[data-closing="true"] { animation: ios-scrim-out var(--duration-base) var(--ease-standard) both; }
+.ios-push { animation: ios-push-in var(--duration-sheet) var(--ease-spring) both; }
+.ios-cover { animation: ios-cover-in var(--duration-sheet) var(--ease-spring) both; }
+.ios-press { transition: background-color var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard); }
+.ios-press:active { transform: scale(0.98); background-color: var(--color-surface-hover); }
+.ios-progress { transition: width var(--duration-slow) linear; }
+@media (prefers-reduced-motion: reduce) {
+  .ios-sheet, .ios-scrim, .ios-push, .ios-cover { animation-duration: 0.01ms !important; }
+  .ios-press, .ios-progress { transition: none; }
+  .ios-press:active { transform: none; }
+}
+
+/* Wallpaper for the lock-screen mock (always dark, regardless of theme). */
+.ios-wallpaper { background: linear-gradient(170deg, var(--color-ink-900) 0%, var(--color-ink-950) 45%, var(--color-n-1000) 100%); color: var(--color-n-0); }
+.ios-lock-glass { background: rgb(23 26 33 / 0.62); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
+.ios-scroll { overscroll-behavior: contain; scrollbar-width: none; }
+.ios-scroll::-webkit-scrollbar { display: none; }
+.pt-safe { padding-top: var(--spacing-safe-top); }
+.pb-safe { padding-bottom: var(--spacing-safe-bottom); }

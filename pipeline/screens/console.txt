@@ -1,0 +1,8 @@
+Console errors/warnings for 2 shots against http://127.0.0.1:51118
+
+## specimen-light (/specimen, light, comfortable)
+(no console errors)
+
+## specimen-dark (/specimen, dark, comfortable)
+(no console errors)
+
