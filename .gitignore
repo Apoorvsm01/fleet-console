@@ -3,3 +3,6 @@ dist/
 .DS_Store
 # Private: hiring-manager review of the designer's portfolio, not part of the public pipeline
 01-portfolio-review.md
+
+# Resume sources contain private contact details
+resume/

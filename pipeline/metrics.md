@@ -48,3 +48,5 @@
 | 2026-10-29 | redesign | surface switcher + embed fit | sonnet | 67850 | 38 | 297 |
 | 2026-10-29 | redesign | case-study restructure | sonnet | 126898 | 35 | 284 |
 | 2026-10-29 | redesign | motion reel | sonnet | 124321 | 41 | 471 |
+| 2026-10-29 | resume | extract | haiku | 71873 | 6 | 30 |
+| 2026-10-29 | resume | typeset + site link | sonnet | 99116 | 21 | 135 |
