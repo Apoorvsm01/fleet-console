@@ -57,7 +57,7 @@ Some answers I knew from the work itself: the need came from both operators and 
 **2. Now is home, and it owns debt and coverage.**
 - *Decided:* the landing screen shows live escalations, a 24-hour coverage bar with gaps hatched and labeled in text, and four debt tiles. Each tile links to the exact queue behind its number.
 - *Rejected:* Inbox as home (a coverage gap stays hidden until someone looks); a weekly report page (too late).
-- *Rejected within Now:* a composite score or donut the lead can't reproduce by counting. The hero is a sum with the arithmetic shown, and the number reconciles with its queue.
+- *Rejected within Now:* a composite score or donut the lead can't reproduce by counting. The hero is a plain sum with the arithmetic shown.
 
 **3. An escalation rota with a timeout.**
 - *Decided:* an unacknowledged escalation re-routes down an on-call rota. The countdown and "who is next" are always visible.

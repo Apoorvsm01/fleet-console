@@ -38,3 +38,5 @@
 | 2026-10-29 | 4s-fix | builder (vehicle fixes) | sonnet | 57107 | 20 | 809 |
 | 2026-10-29 | 7 | honesty-checker | haiku | 79915 | 7 | 8108 |
 | 2026-10-29 | 6 | storyteller (pipeline story r2) | sonnet | 63660 | 11 | 163 |
+| 2026-10-29 | publish | builder (pages prep) | sonnet | 40840 | 11 | 64 |
+| 2026-10-29 | publish | portfolio conversion | sonnet | 121296 | 25 | 208 |

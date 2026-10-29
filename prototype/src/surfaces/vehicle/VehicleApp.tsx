@@ -227,7 +227,9 @@ function EmergencyCall() {
   useEffect(() => {
     const w = window as unknown as { SpeechRecognition?: new () => Recognition; webkitSpeechRecognition?: new () => Recognition }
     const Ctor = w.SpeechRecognition ?? w.webkitSpeechRecognition
-    if (!Ctor || navigator.webdriver) return
+    // In the car, voice is always on. In the public prototype it's opt-in (?voice=1) so visitors don't get a mic prompt on load.
+    const optedIn = new URLSearchParams(window.location.search).get('voice') === '1'
+    if (!Ctor || navigator.webdriver || !optedIn) return
     let stopped = false
     const r = new Ctor(); r.continuous = true; r.interimResults = false; r.lang = 'en-US'
     r.onresult = (e) => {
